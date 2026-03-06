@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hariprasaath J — Backend Developer at TCS. Java, Spring Boot, AWS DynamoDB, Playwright Automation.">
+<meta name="author" content="Hariprasaath J">
+<title>Hariprasaath J — Backend Developer</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Three.js (for intro shader animation) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- Styles -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- INTRO -->
+<div id="intro">
+  <canvas id="shader-canvas"></canvas>
+  <div class="intro-content">
+    <div class="intro-greeting">Welcome to</div>
+    <div class="intro-name"><em>My</em><br>Portfolio</div>
+    <div class="intro-role">Backend Developer &nbsp;·&nbsp; TCS</div>
+    <div class="intro-line"></div>
+  </div>
+  <div class="intro-skip" onclick="skipIntro()">Skip ↗</div>
+</div>
+
+<!-- MOBILE NAV DRAWER -->
+<div id="mob-drawer">
+  <a href="#about" onclick="closeMobMenu()">About</a>
+  <a href="#techstack" onclick="closeMobMenu()">Tech Stack</a>
+  <a href="#experience" onclick="closeMobMenu()">Experience</a>
+  <a href="#projects" onclick="closeMobMenu()">Projects</a>
+  <a href="#achievements" onclick="closeMobMenu()">Achievements</a>
+  <a href="#contact" onclick="closeMobMenu()">Contact</a>
+</div>
+
+<!-- LIQUID CRYSTAL BACKGROUND -->
+<canvas id="lc-bg" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.18;"></canvas>
+
+<!-- NAV -->
+<nav id="mainnav">
+  <div class="nav-logo">Hariprasaath <em>J</em></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#techstack">Tech Stack</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <!-- Hamburger (mobile only) -->
+  <button id="mob-menu-btn" aria-label="Open menu">
+    <div class="bar-wrap">
+      <span class="bar b1"></span>
+      <span class="bar b2"></span>
+      <span class="bar b3"></span>
+    </div>
+  </button>
+
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-split">
+
+    <!-- LEFT: text content -->
+    <div class="hero-left">
+      <div class="hero-left-inner">
+        <div class="hero-tag"><span class="dot"></span><span>Backend Developer &nbsp;·&nbsp; Tata Consultancy Services</span></div>
+        <h1 class="hero-h1">
+          Building <em>scalable</em><br>backend systems<br>
+          <span class="dim">that just work.</span>
+        </h1>
+        <p class="hero-bio">
+          Backend Developer at Tata Consultancy Services, specialising in Java, Spring Boot,
+          AWS DynamoDB and production automation. I build reliable banking-grade services,
+          design cloud data solutions, and automate operational workflows so engineering teams
+          can focus on what matters.
+        </p>
+        <div class="hero-btns">
+          <a href="#experience" class="btn btn-solid">View Experience</a>
+          <a href="#contact" class="btn btn-outline">Get in Touch →</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="num">TCS</div><div class="lbl">Current Employer</div></div>
+          <div class="stat"><div class="num">8.86</div><div class="lbl">CGPA</div></div>
+          <div class="stat"><div class="num">Java</div><div class="lbl">Core Language</div></div>
+          <div class="stat"><div class="num">AWS</div><div class="lbl">Cloud Platform</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: photo -->
+    <div class="hero-right" id="hero-photo-zone">
+      <div class="hero-right-top-fade"></div>
+      <!-- 
+        TO ADD YOUR PHOTO: 
+        Replace the placeholder below with:
+        <img class="hero-photo" src="your-photo.jpg" alt="Hariprasaath J">
+        OR drag & drop your photo onto this area in the browser.
+      -->
+      <div class="hero-photo-placeholder" id="photo-placeholder">
+        <div style="text-align:center; pointer-events:none;">
+          <div style="font-family:'DM Serif Display',serif; font-size:7rem; font-style:italic; color:rgba(167,139,250,0.12); line-height:1;">HJ</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:3px; color:var(--text-dim); margin-top:12px; text-transform:uppercase;">Drop photo here</div>
+        </div>
+      </div>
+      <img id="hero-img" src="photo.png" alt="Hariprasaath J" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; filter:grayscale(15%) contrast(1.05);" onerror="this.style.display='none';document.getElementById('photo-placeholder').style.display='flex';">
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <div class="avatar" style="overflow:hidden; aspect-ratio:1; position:relative;">
+          <img id="about-img" src="Photo.png" alt="Hariprasaath J" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 10%;" onerror="this.style.display='none';document.getElementById('about-init').style.display='flex';">
+          <div id="about-init" class="avatar-init" style="display:none; position:absolute; inset:0; align-items:center; justify-content:center;">HJ</div>
+        </div>
+        <div class="card-name">Hariprasaath J</div>
+        <div class="card-role">Backend Developer</div>
+        <div class="card-info">
+          <div class="ci"><span class="ci-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlow">
+    <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlow)">
+  <rect x="3" y="5" width="18" height="14" rx="2"/>
+  <polyline points="3,7 12,13 21,7"/>
+</g>
+</svg></span>hariprasaath2002@gamil.com</div>
+          <div class="ci"><span class="ci-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlow3">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlow3)">
+  <path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/>
+  <circle cx="12" cy="10" r="2"/>
+</g>
+</svg></span><span>Chennai, Tamil Nadu</span></div>
+          <div class="ci"><span class="ci-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlow2">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlow2)">
+  <rect x="2" y="2" width="20" height="20" rx="4"/>
+  <line x1="7" y1="10" x2="7" y2="17"/>
+  <line x1="7" y1="7" x2="7" y2="7"/>
+  <path d="M11 17v-4a3 3 0 0 1 6 0v4"/>
+</g>
+</svg></span><a href="https://www.linkedin.com/in/hari-prasaath-j-547066258" target="_blank">linkedin</a></div>
+          <div class="ci"><span class="ci-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlowDegree">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlowDegree)">
+  <path d="M2 10l10-5 10 5-10 5-10-5z"/>
+  <path d="M6 12v5c3 2 9 2 12 0v-5"/>
+</g>
+</svg></span><span>B.Tech AI &amp; DS · Muthayammal Engineering College</span></div>
+          <div class="ci"><span class="ci-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlowCgpa">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlowCgpa)">
+  <circle cx="12" cy="8" r="4"/>
+  <path d="M6 20c1.5-3 10.5-3 12 0"/>
+</g>
+</svg></span><span>2021 – 2024 &nbsp;|&nbsp; CGPA 8.86</span></div>
+        </div>
+      </div>
+
+      <div class="about-body reveal">
+        <div class="sec-label">001 — About Me</div>
+        <h2 class="sec-title">Who I <em>am</em></h2>
+        <p>
+          I am a Backend Developer currently working at Tata Consultancy Services,
+          building and maintaining backend services in a banking environment. I specialise
+          in Java-based backend development using Spring Boot and cloud technologies such as
+          Amazon Web Services. My work involves designing reliable backend services,
+          managing data using Amazon DynamoDB, and improving code quality through automated
+          testing with JUnit.
+        </p>
+        <p>
+          Beyond development, I focus heavily on automation and operational efficiency.
+          I built automation tools using Playwright to monitor production server logs, detect
+          critical exceptions, and automatically send alerts through email notifications —
+          reducing manual log monitoring and improving response time for production issues.
+        </p>
+        <p>
+          I enjoy solving backend scalability and reliability problems, and I continuously
+          expand my skills in cloud technologies, system automation, and backend architecture.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="techstack">
+  <div class="container">
+    <div class="sec-label reveal">002 — Capabilities</div>
+    <h2 class="sec-title reveal">Tech <em>Stack</em></h2>
+    <div class="tech-grid reveal">
+      <div class="tech-cell">
+        <span class="tc-icon icon-java">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.851 18.56s-.917.534.653.714c1.902.218 2.874.187 4.969-.211 0 0 .552.346 1.321.646-4.699 2.013-10.633-.118-6.943-1.149M8.276 15.933s-1.028.761.542.924c2.032.209 3.636.227 6.413-.308 0 0 .384.389.987.602-5.679 1.661-12.007.13-7.942-1.218M13.116 11.475c1.158 1.333-.304 2.533-.304 2.533s2.939-1.518 1.589-3.418c-1.261-1.772-2.228-2.652 3.007-5.688 0 0-8.216 2.051-4.292 6.573" fill="#f87171"/>
+            <path d="M19.33 20.504s.679.559-.747.991c-2.712.822-11.288 1.069-13.669.033-.856-.373.749-.89 1.254-.998.527-.114.828-.093.828-.093-.953-.671-6.156 1.317-2.643 1.887 9.58 1.553 17.462-.7 14.977-1.82M9.292 13.21s-4.362 1.036-1.544 1.412c1.189.159 3.561.123 5.77-.062 1.806-.152 3.618-.477 3.618-.477s-.637.272-1.098.587c-4.429 1.165-12.981.623-10.522-.568 2.082-1.006 3.776-.892 3.776-.892M17.116 17.584c4.503-2.34 2.421-4.589.968-4.285-.355.074-.515.138-.515.138s.132-.207.385-.297c2.875-1.011 5.086 2.981-.928 4.562 0 0 .07-.062.09-.118" fill="#f87171"/>
+            <path d="M14.401 0s2.494 2.494-2.365 6.33c-3.896 3.077-.888 4.832-.001 6.836-2.274-2.053-3.943-3.858-2.824-5.539 1.644-2.469 6.197-3.665 5.19-7.627" fill="#f87171"/>
+            <path d="M9.734 23.924c4.322.277 10.959-.153 11.116-2.198 0 0-.302.775-3.572 1.391-3.688.694-8.239.613-10.937.168 0 0 .553.457 3.393.639" fill="#f87171"/>
+          </svg>
+        </span>
+        <div class="tc-cat">Language</div>
+        <div class="tc-name">Java</div>
+        <div class="tc-items">
+          <div class="tc-item">Core Java &amp; OOP</div>
+          <div class="tc-item">Data Structures &amp; Algorithms</div>
+          <div class="tc-item">Design Patterns</div>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="--w:92%"></div></div>
+      </div>
+      <div class="tech-cell">
+        <span class="tc-icon icon-spring">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.205 16.392c-2.469 3.289-7.741 2.179-11.122 2.338 0 0-.599.034-1.201.133 0 0 .228-.097.519-.198 2.374-.821 3.496-.986 4.939-1.727 2.71-1.388 5.408-4.413 5.957-7.555-1.036 3.008-4.17 5.601-7.027 6.661-1.958.73-5.492 1.439-5.492 1.439l-.143-.075c-2.409-1.151-2.486-6.17 1.906-7.78 1.917-.706 3.748-.319 5.814-.793 2.2-.504 4.747-2.09 5.784-4.161.149 1.848.593 4.832-1.027 7.566L20.205 16.392z" fill="#34d399"/>
+            <path d="M20.748 3.9a9.046 9.046 0 0 0-1.136 1.47c-.143.259-.276.524-.39.797a12.038 12.038 0 0 0-.464 1.443c-.264 1.093-.413 2.288-.413 3.487 0 .659.042 1.318.125 1.963l.004.03c.083.644.208 1.274.374 1.877.049.179.101.355.157.529l.028.085c.055.164.113.327.174.488.079.211.162.415.249.616.041.092.082.184.125.274l.027.058c.042.091.086.181.13.27.041.083.082.163.124.244l.005.009.005.009c-.007.003-.014.005-.022.008a.065.065 0 0 1-.024.003.017.017 0 0 1-.01-.003l-.001-.001-.003-.004A12.037 12.037 0 0 1 19.98 12C19.98 7.454 16.524 3.71 11.988 3.42c-.001 0-.001-.001-.002-.001C11.661 3.403 11.332 3.4 11 3.4c-.332 0-.661.003-.989.02C5.463 3.71 2.007 7.454 2.007 12c0 3.316 1.682 6.224 4.226 7.946a.017.017 0 0 1-.01.003.065.065 0 0 1-.024-.003c-.008-.003-.015-.005-.022-.008l.005-.009.005-.009c.042-.081.083-.161.124-.244.044-.089.088-.179.13-.27l.027-.058c.043-.09.084-.182.125-.274.087-.201.17-.405.249-.616.061-.161.119-.324.174-.488l.028-.085c.056-.174.108-.35.157-.529.166-.603.291-1.233.374-1.877l.004-.03c.083-.645.125-1.304.125-1.963 0-1.199-.149-2.394-.413-3.487a12.038 12.038 0 0 0-.464-1.443 9.046 9.046 0 0 0-.39-.797A9.046 9.046 0 0 0 5.265 3.9a9.027 9.027 0 0 1 5.733-2.066c.334 0 .665.018.992.053C15.66 2.317 18.94 4.843 20.748 3.9z" fill="#34d399"/>
+          </svg>
+        </span>
+        <div class="tc-cat">Framework</div>
+        <div class="tc-name">Spring Boot</div>
+        <div class="tc-items">
+          <div class="tc-item">REST API Development</div>
+          <div class="tc-item">Spring MVC</div>
+          <div class="tc-item">Microservices</div>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="--w:85%"></div></div>
+      </div>
+      <div class="tech-cell">
+        <span class="tc-icon icon-aws">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.064.056.128.056.184 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.063-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.063-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.778.778 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.063.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.271-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167z" fill="#fbbf24"/>
+            <path d="M20.16 17.238c-2.301 1.701-5.644 2.602-8.518 2.602-4.029 0-7.656-1.49-10.402-3.967-.215-.194-.023-.459.236-.308 2.962 1.723 6.622 2.761 10.402 2.761 2.552 0 5.356-.529 7.937-1.626.39-.167.718.255.345.538z" fill="#fbbf24"/>
+            <path d="M21.069 16.198c-.294-.376-1.944-.178-2.686-.089-.225.026-.26-.169-.057-.311 1.315-.924 3.472-.658 3.724-.348.252.317-.066 2.474-1.302 3.505-.19.159-.37.074-.286-.136.278-.693.902-2.245.607-2.621z" fill="#fbbf24"/>
+          </svg>
+        </span>
+        <div class="tc-cat">Cloud &amp; Database</div>
+        <div class="tc-name">AWS &amp; DynamoDB</div>
+        <div class="tc-items">
+          <div class="tc-item">Amazon DynamoDB</div>
+          <div class="tc-item">SQL &amp; Oracle</div>
+          <div class="tc-item">Cloud Fundamentals</div>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="--w:78%"></div></div>
+      </div>
+      <div class="tech-cell">
+        <span class="tc-icon icon-play">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="#a78bfa" stroke-width="1.5"/>
+            <path d="M9.5 8.5c0-.828.895-1.3 1.6-.838l5 3.2c.647.414.647 1.362 0 1.776l-5 3.2c-.705.452-1.6-.01-1.6-.838V8.5z" fill="#a78bfa"/>
+            <path d="M4 8h2M4 12h1M4 16h2" stroke="#a78bfa" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M18 8h2M19 12h1M18 16h2" stroke="#a78bfa" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="tc-cat">Automation</div>
+        <div class="tc-name">Playwright</div>
+        <div class="tc-items">
+          <div class="tc-item">Log Monitoring Automation</div>
+          <div class="tc-item">Email Alert Integration</div>
+          <div class="tc-item">Production Ops Tools</div>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="--w:80%"></div></div>
+      </div>
+      <div class="tech-cell">
+        <span class="tc-icon icon-junit">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="18" height="18" rx="3" stroke="#60a5fa" stroke-width="1.5"/>
+            <path d="M8 12l3 3 5-5" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 7h8M8 17h5" stroke="#60a5fa" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+        </span>
+        <div class="tc-cat">Testing</div>
+        <div class="tc-name">JUnit &amp; Mutation</div>
+        <div class="tc-items">
+          <div class="tc-item">Unit Testing</div>
+          <div class="tc-item">Mutation Testing</div>
+          <div class="tc-item">Test Coverage Analysis</div>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="--w:82%"></div></div>
+      </div>
+      <div class="tech-cell">
+        <span class="tc-icon icon-html">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 3l1.5 16.5L12 21l6.5-1.5L20 3H4z" stroke="#fb923c" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M8 8h8l-.5 5-3.5 1-3.5-1-.25-2.5H9.5l.125 1.25L12 12.5l1.875-.75.25-1.75H7.5" stroke="#fb923c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div class="tc-cat">Frontend &amp; Other</div>
+        <div class="tc-name">HTML · CSS · Bootstrap</div>
+        <div class="tc-items">
+          <div class="tc-item">Responsive UI</div>
+          <div class="tc-item">Git &amp; Version Control</div>
+          <div class="tc-item">React js</div>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="--w:68%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="sec-label reveal">003 — Work History</div>
+    <h2 class="sec-title reveal">Work <em>Experience</em></h2>
+    <div class="exp-block reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">Tata Consultancy Services</div>
+          <div class="exp-role">Backend Developer — Banking Domain</div>
+        </div>
+        <div>
+          <span class="exp-period">2024 — Present</span>
+          <span class="exp-badge">Active</span>
+        </div>
+      </div>
+      <ul class="exp-points">
+        <li class="exp-point">
+          <span class="ep-num">01</span>
+          <span class="ep-text">Developed and maintained <strong>scalable and reliable backend services</strong> using Java and Spring Boot in a banking environment, following clean code principles and best practices.</span>
+        </li>
+        <li class="exp-point">
+          <span class="ep-num">02</span>
+          <span class="ep-text">Designed and managed <strong>efficient data storage solutions using AWS DynamoDB</strong>, ensuring high availability and performance for critical banking data.</span>
+        </li>
+        <li class="exp-point">
+          <span class="ep-num">03</span>
+          <span class="ep-text">Implemented <strong>unit testing with JUnit</strong>, improving code quality and reducing production bugs across multiple backend services.</span>
+        </li>
+        <li class="exp-point">
+          <span class="ep-num">04</span>
+          <span class="ep-text">Built <strong>Playwright-based automation tools</strong> to monitor production server logs in real time, detect critical exceptions, and dispatch automated email alert notifications — reducing manual monitoring overhead.</span>
+        </li>
+        <li class="exp-point">
+          <span class="ep-num">05</span>
+          <span class="ep-text">Performed <strong>mutation testing</strong> to identify gaps in test coverage and strengthen validation logic, improving the reliability and correctness of backend services.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-label reveal">004 — Builds</div>
+    <h2 class="sec-title reveal">Automation &amp; <em>Projects</em></h2>
+    <div class="proj-grid reveal">
+      <div class="proj-card">
+        <div class="proj-num">PROJECT // 01</div>
+        <div class="proj-title">Production Log Monitor</div>
+        <span class="proj-type">Playwright · Automation</span>
+        <p class="proj-desc">Built a Playwright automation tool that continuously monitors production server logs, detects critical exceptions in real time, and sends automated email alerts — cutting manual monitoring effort and reducing issue response time at TCS.</p>
+        <div class="proj-tags"><span class="ptag">Playwright</span><span class="ptag">Java</span><span class="ptag">Email API</span><span class="ptag">Log Parsing</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-num">PROJECT // 02</div>
+        <div class="proj-title">Banking Backend Services</div>
+        <span class="proj-type">Spring Boot · AWS DynamoDB</span>
+        <p class="proj-desc">Designed and maintained scalable RESTful backend services for a banking platform. Implemented DynamoDB-backed data layers with high availability, efficient query patterns, and clean service architecture.</p>
+        <div class="proj-tags"><span class="ptag">Java</span><span class="ptag">Spring Boot</span><span class="ptag">AWS DynamoDB</span><span class="ptag">REST API</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-num">PROJECT // 03</div>
+        <div class="proj-title">Crop Nutrient Disaster Detection</div>
+        <span class="proj-type">AI · Agriculture · Hackathon</span>
+        <p class="proj-desc">Developed an AI-based agriculture system for the National VJ Hackathon that detects crop nutrient deficiencies and disaster risk. Advanced to Level 2 in the national competition under the Smart Innovation domain.</p>
+        <div class="proj-tags"><span class="ptag">Python</span><span class="ptag">Machine Learning</span><span class="ptag">Computer Vision</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-num">PROJECT // 04</div>
+        <div class="proj-title">Test Quality &amp; Coverage Framework</div>
+        <span class="proj-type">JUnit · Mutation Testing</span>
+        <p class="proj-desc">Implemented a structured testing framework using JUnit and mutation testing to systematically identify coverage gaps, strengthen validation logic, and reduce production-side defects in backend services.</p>
+        <div class="proj-tags"><span class="ptag">JUnit</span><span class="ptag">Mutation Testing</span><span class="ptag">Java</span><span class="ptag">CI Pipeline</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="sec-label reveal">005 — Milestones</div>
+    <h2 class="sec-title reveal"><em>Achievements</em> &amp; Certifications</h2>
+    <div class="ach-list reveal">
+      <div class="ach-item">
+        <span class="ach-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlowCert">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlowCert)">
+  <rect x="4" y="3" width="16" height="18" rx="2"/>
+  <line x1="8" y1="8" x2="16" y2="8"/>
+  <line x1="8" y1="12" x2="16" y2="12"/>
+  <line x1="8" y1="16" x2="12" y2="16"/>
+</g>
+</svg>
+        </span>
+        <div>
+          <div class="ach-title">TCS WINGS — Business Module Certification</div>
+          <p class="ach-desc">Cleared the TCS WINGS Business Module certification, demonstrating knowledge of business domain concepts and practices within the TCS ecosystem.</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlowAI">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlowAI)">
+  <rect x="6" y="7" width="12" height="10" rx="2"/>
+  <circle cx="9" cy="12" r="1"/>
+  <circle cx="15" cy="12" r="1"/>
+  <line x1="12" y1="7" x2="12" y2="4"/>
+</g>
+</svg>
+        </span>
+        <div>
+          <div class="ach-title">SMART AI Hackathon — Tata Consultancy Services</div>
+          <p class="ach-desc">Actively participated in the SMART AI Hackathon conducted at TCS, collaborating on AI-driven problem statements with cross-functional teams.</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlowGenAI">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlowGenAI)">
+  <circle cx="12" cy="12" r="3"/>
+  <line x1="12" y1="2" x2="12" y2="6"/>
+  <line x1="12" y1="18" x2="12" y2="22"/>
+  <line x1="2" y1="12" x2="6" y2="12"/>
+  <line x1="18" y1="12" x2="22" y2="12"/>
+</g>
+</svg></span>
+        <div>
+          <div class="ach-title">GEN AI E1 Certification</div>
+          <p class="ach-desc">Successfully completed GEN AI certification in TCS ievolve</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlowDegree">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlowDegree)">
+  <path d="M2 10l10-5 10 5-10 5-10-5z"/>
+  <path d="M6 12v5c3 2 9 2 12 0v-5"/>
+</g>
+</svg></span>
+        <div>
+          <div class="ach-title">NPTEL Certification — Python for Data Science</div>
+          <p class="ach-desc">Completed the NPTEL-certified course in Python for Data Science, covering data manipulation, analysis, and foundational machine learning concepts.</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+stroke="#00f7ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+<defs>
+  <filter id="neonGlowAward">
+    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+
+<g filter="url(#neonGlowAward)">
+  <circle cx="12" cy="8" r="4"/>
+  <path d="M8 14l-2 7 6-3 6 3-2-7"/>
+</g>
+</svg></span>
+        <div>
+          <div class="ach-title">Level 2 — National VJ Hackathon · Victory &amp; Joy in Smart Innovation</div>
+          <p class="ach-desc">Advanced to Level 2 in the National VJ Hackathon with the AI-based project "Crop Nutrient Disasters" in the Agriculture domain — competing among top teams at a national level.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-label reveal">006 — Connect</div>
+    <h2 class="sec-title reveal">Get in <em>Touch</em></h2>
+    <div class="contact-grid reveal">
+      <div class="contact-intro">
+        <h3>Let's Connect</h3>
+        <p>Open to new opportunities, collaborations, or a good conversation about backend systems and automation. Reach out through any channel below and I'll get back to you promptly.</p>
+        <div class="c-links">
+
+          <a href="mailto:hariprasaath2002@gmail.com" class="c-link">
+            <span class="c-icon-wrap c-icon-email">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="3"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </span>
+            <div class="c-info"><div class="c-lbl">Email</div><div class="c-val">hariprasaath2002@gmail.com</div></div>
+            <span class="c-arr">↗</span>
+          </a>
+
+         
+          <a href="https://www.linkedin.com/in/hari-prasaath-j-547066258" target="_blank" class="c-link">
+            <span class="c-icon-wrap c-icon-linkedin">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="4"/>
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+              </svg>
+            </span>
+            <div class="c-info"><div class="c-lbl">LinkedIn</div><div class="c-val">HARI PRASAATH J</div></div>
+            <span class="c-arr">↗</span>
+          </a>
+
+          <a href="#" class="c-link">
+            <span class="c-icon-wrap c-icon-location">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </span>
+            <div class="c-info"><div class="c-lbl">Location</div><div class="c-val">Chennai, Tamil Nadu, India</div></div>
+            <span class="c-arr">↗</span>
+          </a>
+
+        </div>
+      </div>
+
+      <div class="form" id="contact-form">
+        <div class="form-row">
+          <div class="fg"><label class="flbl">Your Name</label><input class="finput" id="f-name" type="text" placeholder="Your name" required></div>
+          <div class="fg"><label class="flbl">Your Email</label><input class="finput" id="f-email" type="email" placeholder="your@email.com" required></div>
+        </div>
+        <div class="fg"><label class="flbl">Subject</label><input class="finput" id="f-subject" type="text" placeholder="What's this about?"></div>
+        <div class="fg"><label class="flbl">Message</label><textarea class="ftextarea" id="f-message" placeholder="Tell me about the opportunity or project…" required></textarea></div>
+
+        <!-- Status box (hidden by default) -->
+        <div id="form-status" style="display:none; padding:14px 16px; font-family:'DM Mono',monospace; font-size:0.75rem; letter-spacing:1px; border-radius:0;"></div>
+
+        <button class="fsubmit" id="f-btn" onclick="sendMsg()">Send Message →</button>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-name">Hariprasaath J</div>
+  <div class="foot-info">© 2025 · Backend Developer · Chennai, India</div>
+  <div class="foot-info" id="ft-clock"></div>
+</footer>
+
+<!-- EmailJS (for contact form — add your keys in js/main.js) -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<!-- Main scripts -->
+<script src="js/main.js"></script>
+</body>
+</html>
