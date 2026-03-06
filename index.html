@@ -16,19 +16,6 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<!--
-  ============================================================
-  HOW TO ADD YOUR PHOTO
-  ============================================================
-  1. Save your photo as:  photo.jpg
-  2. Put it in the SAME folder as this HTML file
-  3. Open the HTML in your browser — done!
-
-  To change the crop/position, find id="hero-img" and
-  id="about-img" and adjust object-position value.
-  ============================================================
--->
-
 <!-- INTRO -->
 <div id="intro">
   <canvas id="shader-canvas"></canvas>
@@ -110,13 +97,7 @@
     <!-- RIGHT: photo -->
     <div class="hero-right" id="hero-photo-zone">
       <div class="hero-right-top-fade"></div>
-      <!-- 
-        TO ADD YOUR PHOTO: 
-        Replace the placeholder below with:
-        <img class="hero-photo" src="your-photo.jpg" alt="Hariprasaath J">
-        OR drag & drop your photo onto this area in the browser.
-      -->
-      <div class="hero-photo-placeholder" id="photo-placeholder">
+        <div class="hero-photo-placeholder" id="photo-placeholder">
         <div style="text-align:center; pointer-events:none;">
           <div style="font-family:'DM Serif Display',serif; font-size:7rem; font-style:italic; color:rgba(167,139,250,0.12); line-height:1;">HJ</div>
           <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:3px; color:var(--text-dim); margin-top:12px; text-transform:uppercase;">Drop photo here</div>
@@ -134,7 +115,7 @@
     <div class="about-grid">
       <div class="about-card reveal">
         <div class="avatar" style="overflow:hidden; aspect-ratio:1; position:relative;">
-          <img id="about-img" src="Photo.png" alt="Hariprasaath J" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 10%;" onerror="this.style.display='none';document.getElementById('about-init').style.display='flex';">
+          <img id="about-img" src="photo.png" alt="Hariprasaath J" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 10%;" onerror="this.style.display='none';document.getElementById('about-init').style.display='flex';">
           <div id="about-init" class="avatar-init" style="display:none; position:absolute; inset:0; align-items:center; justify-content:center;">HJ</div>
         </div>
         <div class="card-name">Hariprasaath J</div>
