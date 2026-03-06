@@ -1,9 +1,0 @@
-REPLACE THIS FILE WITH YOUR PHOTO
-===================================
-1. Rename your photo to:  photo.jpg
-2. Place it here (same folder as index.html)
-3. Delete this .txt file
-4. Open index.html in browser
-
-Using .png instead?
-  Find "photo.jpg" in index.html (2 places) → change to "photo.png"
