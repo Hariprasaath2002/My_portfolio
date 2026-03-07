@@ -254,124 +254,108 @@ function tick() {
 setInterval(tick, 1000);
 tick();
 
-// ── LIQUID CRYSTAL BACKGROUND SHADER (WebGL2, blue palette) ──────────────
+// ── DOTTED SURFACE BACKGROUND (Three.js Wave Animation) ──────────────
 (function () {
   var canvas = document.getElementById("lc-bg");
-  if (!canvas) return;
+  if (!canvas || typeof THREE === "undefined") return;
 
-  var gl = canvas.getContext("webgl2");
-  if (!gl) return;
+  // Enhance canvas visibility for the particle effect
+  canvas.style.opacity = "1";
+  canvas.style.top = "0";
+  canvas.style.left = "0";
+  canvas.style.zIndex = "0";
 
-  var vsSrc =
-    "#version 300 es\nprecision highp float;\nin vec2 position;\nvoid main(){gl_Position=vec4(position,0.0,1.0);}";
+  var SEPARATION = 150;
+  var AMOUNTX = 40;
+  var AMOUNTY = 60;
 
-  var fsSrc = [
-    "#version 300 es",
-    "precision highp float;",
-    "uniform float u_time;",
-    "uniform vec2 u_resolution;",
-    "uniform float u_speed;",
-    "uniform vec3 u_radii;",
-    "uniform vec2 u_smoothK;",
-    "out vec4 fragColor;",
-    "",
-    "float sdCircle(vec2 p, float r){ return length(p)-r; }",
-    "",
-    "float opSU(float d1, float d2, float k){",
-    "  float h=clamp(0.5+0.5*(d2-d1)/k,0.0,1.0);",
-    "  return mix(d2,d1,h)-k*h*(1.0-h);",
-    "}",
-    "",
-    "float scene(vec2 uv){",
-    "  float t=u_time*u_speed;",
-    "  vec2 p1=vec2(cos(t*0.5),sin(t*0.5))*0.3;",
-    "  vec2 p2=vec2(cos(t*0.7+2.1),sin(t*0.6+2.1))*0.4;",
-    "  vec2 p3=vec2(cos(t*0.4+4.2),sin(t*0.8+4.2))*0.35;",
-    "  float b1=sdCircle(uv-p1,u_radii.x);",
-    "  float b2=sdCircle(uv-p2,u_radii.y);",
-    "  float b3=sdCircle(uv-p3,u_radii.z);",
-    "  return opSU(opSU(b1,b2,u_smoothK.x),b3,u_smoothK.y);",
-    "}",
-    "",
-    "void main(){",
-    "  vec2 uv=(gl_FragCoord.xy-0.5*u_resolution)*2.0/u_resolution.y;",
-    "  float d=scene(uv);",
-    "  float rim=0.008/max(abs(d),0.001);",
-    "  // Blue-cyan palette instead of violet",
-    "  vec3 pha=0.5+0.5*cos(u_time*0.3+uv.xyx+vec3(1.8,2.4,3.0));",
-    "  vec3 col=clamp(vec3(rim)*pha,0.0,1.0);",
-    "  // Tint toward blue-cyan: suppress red, boost blue",
-    "  col.r *= 0.3;",
-    "  col.g *= 0.7;",
-    "  col.b *= 1.2;",
-    "  fragColor=vec4(col,1.0);",
-    "}",
-  ].join("\n");
+  var scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x0a0a0a, 2000, 10000); // match dark bg
 
-  function compile(type, src) {
-    var s = gl.createShader(type);
-    gl.shaderSource(s, src);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      console.warn(gl.getShaderInfoLog(s));
-      return null;
-    }
-    return s;
-  }
-
-  var vs = compile(gl.VERTEX_SHADER, vsSrc);
-  var fs = compile(gl.FRAGMENT_SHADER, fsSrc);
-  if (!vs || !fs) return;
-
-  var prog = gl.createProgram();
-  gl.attachShader(prog, vs);
-  gl.attachShader(prog, fs);
-  gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-    console.warn(gl.getProgramInfoLog(prog));
-    return;
-  }
-
-  var buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]),
-    gl.STATIC_DRAW,
+  var camera = new THREE.PerspectiveCamera(
+    60,
+    window.innerWidth / window.innerHeight,
+    1,
+    10000
   );
-  var pos = gl.getAttribLocation(prog, "position");
-  gl.enableVertexAttribArray(pos);
-  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  camera.position.set(0, 355, 1220);
 
-  var uRes = gl.getUniformLocation(prog, "u_resolution");
-  var uTime = gl.getUniformLocation(prog, "u_time");
-  var uSpd = gl.getUniformLocation(prog, "u_speed");
-  var uRad = gl.getUniformLocation(prog, "u_radii");
-  var uK = gl.getUniformLocation(prog, "u_smoothK");
+  var renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true,
+    canvas: canvas
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(scene.fog.color, 0);
+
+  var positions = [];
+  var colors = [];
+  var geometry = new THREE.BufferGeometry();
+
+  for (var ix = 0; ix < AMOUNTX; ix++) {
+    for (var iy = 0; iy < AMOUNTY; iy++) {
+      var x = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
+      var y = 0;
+      var z = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
+
+      positions.push(x, y, z);
+      // Modern Neon Blue accent color (3B82F6 -> 59, 130, 246)
+      colors.push(59 / 255, 130 / 255, 246 / 255);
+    }
+  }
+
+  geometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(positions, 3)
+  );
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+
+  var material = new THREE.PointsMaterial({
+    size: 5,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.6,
+    sizeAttenuation: true,
+  });
+
+  var points = new THREE.Points(geometry, material);
+  scene.add(points);
+
+  var count = 0;
+  var rafId;
+
+  function animate() {
+    rafId = requestAnimationFrame(animate);
+
+    var positionAttribute = geometry.attributes.position;
+    var posArray = positionAttribute.array;
+
+    var i = 0;
+    for (var ix = 0; ix < AMOUNTX; ix++) {
+      for (var iy = 0; iy < AMOUNTY; iy++) {
+        var index = i * 3;
+        // Animate Y position with sine waves
+        posArray[index + 1] =
+          Math.sin((ix + count) * 0.3) * 50 +
+          Math.sin((iy + count) * 0.5) * 50;
+        i++;
+      }
+    }
+
+    positionAttribute.needsUpdate = true;
+    renderer.render(scene, camera);
+    count += 0.1;
+  }
 
   function resize() {
-    var dpr = window.devicePixelRatio || 1;
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
   }
-  resize();
-  window.addEventListener("resize", resize);
 
-  function draw(t) {
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.useProgram(prog);
-    gl.uniform2f(uRes, canvas.width, canvas.height);
-    gl.uniform1f(uTime, t * 0.001);
-    gl.uniform1f(uSpd, 0.55);
-    gl.uniform3fv(uRad, [0.25, 0.18, 0.3]);
-    gl.uniform2fv(uK, [0.2, 0.3]);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
+  window.addEventListener("resize", resize);
+  animate();
 })();
 
 /* ─────────────────────────── */
@@ -411,6 +395,8 @@ function closeMobMenu() {
   if (mobDrawer) mobDrawer.classList.remove("open");
   if (mobBtn) mobBtn.classList.remove("is-open");
 }
+
+
 
 // ── SMOOTH SCROLL — easeInOutQuart, 700ms ───────────────────
 function smoothScrollTo(targetEl) {
@@ -483,3 +469,84 @@ function tick() {
 }
 setInterval(tick, 1000);
 tick();
+
+// ── DOTTED SURFACE V2 (HERO) ────────────────────────────────
+function createDottedSurface(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const SEPARATION = 150;
+    const AMOUNTX = 40;
+    const AMOUNTY = 60;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0xffffff, 2000, 10000);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.set(0, 355, 1220);
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(container.clientWidth || window.innerWidth, container.clientHeight || window.innerHeight);
+    renderer.setClearColor(scene.fog.color, 0); 
+    container.appendChild(renderer.domElement);
+
+    const positions = [];
+    const colors = [];
+    const geometry = new THREE.BufferGeometry();
+
+    for (let ix = 0; ix < AMOUNTX; ix++) {
+        for (let iy = 0; iy < AMOUNTY; iy++) {
+            const x = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
+            const y = 0;
+            const z = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
+            positions.push(x, y, z);
+            colors.push(200 / 255, 200 / 255, 200 / 255); // Light grey/white color equivalent
+        }
+    }
+
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+        size: 8,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8,
+        sizeAttenuation: true,
+    });
+
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    let count = 0;
+    function animate() {
+        requestAnimationFrame(animate);
+        const positionAttribute = geometry.attributes.position;
+        const posArray = positionAttribute.array;
+        
+        let i = 0;
+        for (let ix = 0; ix < AMOUNTX; ix++) {
+            for (let iy = 0; iy < AMOUNTY; iy++) {
+                const index = i * 3;
+                posArray[index + 1] = Math.sin((ix + count) * 0.3) * 50 + Math.sin((iy + count) * 0.5) * 50;
+                i++;
+            }
+        }
+        positionAttribute.needsUpdate = true;
+        renderer.render(scene, camera);
+        count += 0.1;
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth || window.innerWidth, container.clientHeight || window.innerHeight);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+   createDottedSurface('dotted-surface-container');
+});
